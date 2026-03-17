@@ -1,0 +1,77 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+    public class SkillBook : MonoBehaviour
+    {
+        public SkillTree attackSkillTree;
+
+        Skill attack;
+        Skill fireStorm;
+        Skill fireBall;
+        Skill fireBlast;
+        Skill fireWave;
+        Skill fireExplosion;
+
+        Skill thunderbolt;
+        Skill thunderboltbolt;
+        Skill thunderboltboltbolt;
+        Skill lightningThunder;
+
+        public void Start()
+        {
+        // create skill
+        attack = new Skill("Attack");
+        attack.isAvailable = true;
+        fireStorm = new Skill("FireStorm");
+        fireBall = new Skill("Fireball");
+        fireBlast = new Skill("FireBlast");
+        fireWave = new Skill("FireWave");
+        fireExplosion = new Skill("FireExplosion");
+
+        thunderbolt = new Skill("Thunderbolt");
+        thunderboltbolt = new Skill("Thunderboltbolt");
+        thunderboltboltbolt = new Skill("Thunderboltboltbolt");
+        lightningThunder = new Skill("LightningThunder");
+        // build skill tree
+        // └── Attack
+        //     └── FireStorm
+        //         ├── FireBlast
+        //         └── FireBall
+        //             └── FireWave
+        //                 └── FireExplosion
+
+
+        // 1. set the nextSkills for each skill
+
+        // [0] Attack -> FireStorm
+        attack.nextSkills.Add(fireStorm);
+        // [1] FireStorm -> FireBlast
+        fireStorm.nextSkills.Add(fireBlast);
+        // [2] FireStorm -> FireBall
+        fireStorm.nextSkills.Add(fireBall);
+        // [3] FireBall -> FireWave
+        fireBall.nextSkills.Add(fireWave);
+        // [4] FireWave -> FireExplosion
+        fireWave.nextSkills.Add(fireExplosion);
+
+        attack.nextSkills.Add(thunderbolt);
+        thunderbolt.nextSkills.Add(thunderboltbolt);
+        thunderboltbolt.nextSkills.Add(thunderboltboltbolt);
+        thunderboltboltbolt.nextSkills.Add(lightningThunder);
+
+        this.attackSkillTree = new SkillTree(attack);
+        }
+
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                //attackSkillTree.rootSkill.PrintSkillTreeHierarchy("");
+                attackSkillTree.rootSkill.PrintSkillTree();
+                Debug.Log("====================================");
+            } 
+        }
+    }
+
